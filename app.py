@@ -1,6 +1,5 @@
 # インポート
 import spacy
-from google.colab import files
 import docx
 from docx.oxml.text.paragraph import CT_P
 from docx.oxml.table import CT_Tbl

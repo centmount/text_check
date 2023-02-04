@@ -1,0 +1,9 @@
+streamlit
+spacy==3.4.4
+python-docx
+bs4
+requests
+smtplib
+email
+pandas
+https://huggingface.co/spacy/ja_core_news_lg/resolve/main/ja_core_news_lg-any-py3-none-any.whl

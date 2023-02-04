@@ -97,12 +97,15 @@ def count_df(df):
 def df_to_excel(df):
     df.to_excel('caution_words.xlsx') 
 
+gmail_address = st.secrets['gmail_address']
+gmail_pass = st.secrets['gmail_pass']
+    
 # メールを送る
-def sendGmailAttach(my_address, file_name):
+def sendGmailAttach(my_address, file_name, gmail_address, gmail_pass):
     if my_address == '':
         print('メールアドレスを入力してください')
     else:
-        sender, password = "????@gmail.com", "***********" # 送信元メールアドレスとgmailへのログイン情報 
+        sender, password = gmail_address, gmail_pass # 送信元メールアドレスとgmailへのログイン情報 
         to = my_address  # 送信先メールアドレス
         sub = '注意ワードのチェック' #メール件名
         text = '原稿をテキスト分析して固有表現を抽出、Yahoo!ニュースとの一致度をチェックしました'  # メール本文
@@ -160,13 +163,13 @@ def sendGmailAttach(my_address, file_name):
         gmail.send_message(msg)
 
 # メイン関数
-def main(my_address, file_name):
+def main(my_address, file_name, gmail_address, gmail_pass):
     text = read_text(file_name)
     entities =  named_entity_recognition(text)
     df_name = make_df(entities)
     df_name_count = count_df(df_name)
     df_to_excel(df_name_count)
-    sendGmailAttach(my_address, file_name)
+    sendGmailAttach(my_address, file_name, gmail_address, gmail_pass)
     print('処理を終了しました')
 
 # streamlit画面作成
@@ -187,5 +190,5 @@ my_address = st.text_input("メールアドレス")
 
 if file and my_address:
     st.write('処理を開始します')
-    main(my_address, file_name)
+    main(my_address, file_name, gmail_address, gmail_pass)
     st.write('処理を終了しました')

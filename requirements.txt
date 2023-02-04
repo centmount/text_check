@@ -1,5 +1,5 @@
 streamlit
-spacy==3.4.4
+spacy
 python-docx
 bs4
 requests

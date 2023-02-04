@@ -5,3 +5,5 @@ bs4
 requests
 pandas
 https://huggingface.co/spacy/ja_core_news_lg/resolve/main/ja_core_news_lg-any-py3-none-any.whl
+openpyxl
+

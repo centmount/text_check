@@ -173,10 +173,10 @@ def main(my_address, file_name, gmail_address, gmail_pass):
 
 # streamlit画面作成
 st.title("原稿の注意ワードチェック")
-st.write("ファイルを選択して、メールアドレスを入力してください")
+st.write("ファイルを登録して、メールアドレスを入力してください")
 
 # ファイルアップロード
-file = st.file_uploader("ファイルをアップロード", accept_multiple_files= False)
+file = st.file_uploader("ファイル（Word[.doc, .docx] or テキスト[.txt]）をアップロード", accept_multiple_files= False)
 if file:
     st.markdown(f'{file.name} をアップロードしました')
     file_name = file.name

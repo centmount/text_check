@@ -40,7 +40,7 @@ def read_text(file_name):
         text = ', '.join(text_list)
         return text        
     elif file_name[-3:] == 'txt':
-        with open(file_name, mode='r', encoding='etf-8') as file:
+        with open(file_name, mode='r', encoding='utf-8') as file:
             text = file.read()
             return text
     else:

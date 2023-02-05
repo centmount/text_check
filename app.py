@@ -6,6 +6,7 @@ from docx.oxml.table import CT_Tbl
 from docx.text.paragraph import Paragraph
 from docx.table import Table
 import re
+import os
 import pandas as pd
 from bs4 import BeautifulSoup
 import requests
@@ -171,15 +172,19 @@ def main_file(my_address, file_name, gmail_address, gmail_pass):
     sendGmailAttach(my_address, file_name, gmail_address, gmail_pass)
     return df_name_count
 
+# カレントディレクトリを取得
+cwd_name = os.getcwd()
+
 # テキスト入力時のメイン関数
 def main_text(my_address, text, gmail_address, gmail_pass):
     entities =  named_entity_recognition(text)
     df_name = make_df(entities)
     df_name_count = count_df(df_name)
-    df_to_excel(df_name_count)    
-    with open('text_check.txt', mode='w', encoding='etf-8') as file:
-        file.write(text)    
-    sendGmailAttach(my_address, 'text_check.txt', gmail_address, gmail_pass)
+    df_to_excel(df_name_count)
+    with open('./text_check.txt', mode='w', encoding='etf-8') as file:
+        file.write(text)
+    text_file = os.path.join(cwd_name, 'text_check.txt')
+    sendGmailAttach(my_address, text_file, gmail_address, gmail_pass)
     return df_name_count
 
 # streamlit画面作成
@@ -187,7 +192,7 @@ st.title("原稿の注意ワードチェック")
 st.write("テキスト入力 または ファイル登録して、メールアドレスを入力してください")
 
 # テキスト入力エリア
-text = st.text_area("テキストを入力して、Ctrl+Enter")
+text = st.text_area("テキストを入力")
 
 # ファイルアップロード
 file = st.file_uploader("ファイル（Word[.doc, .docx] or テキスト[.txt]）をアップロード", accept_multiple_files= False)

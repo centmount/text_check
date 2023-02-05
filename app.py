@@ -181,7 +181,7 @@ def main_text(my_address, text, gmail_address, gmail_pass):
     df_name = make_df(entities)
     df_name_count = count_df(df_name)
     df_to_excel(df_name_count)
-    with open('./text_check.txt', mode='w', encoding='etf-8') as file:
+    with open('./text_check.txt', mode='w', encoding='utf-8') as file:
         file.write(text)
     text_file = os.path.join(cwd_name, 'text_check.txt')
     sendGmailAttach(my_address, text_file, gmail_address, gmail_pass)

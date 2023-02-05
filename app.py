@@ -161,19 +161,33 @@ def sendGmailAttach(my_address, file_name, gmail_address, gmail_pass):
         gmail.login(sender, password)
         gmail.send_message(msg)
 
-# メイン関数
-def main(my_address, file_name, gmail_address, gmail_pass):
+# ファイルありメイン関数
+def main_file(my_address, file_name, gmail_address, gmail_pass):
     text = read_text(file_name)
     entities =  named_entity_recognition(text)
     df_name = make_df(entities)
     df_name_count = count_df(df_name)
     df_to_excel(df_name_count)
     sendGmailAttach(my_address, file_name, gmail_address, gmail_pass)
-    print('処理を終了しました')
+    return df_name_count
+
+# テキスト入力時のメイン関数
+def main_text(my_address, text, gmail_address, gmail_pass):
+    entities =  named_entity_recognition(text)
+    df_name = make_df(entities)
+    df_name_count = count_df(df_name)
+    df_to_excel(df_name_count)    
+    with open('text_check.txt', mode='w', encoding='etf-8') as file:
+        file.write(text)    
+    sendGmailAttach(my_address, 'text_check.txt', gmail_address, gmail_pass)
+    return df_name_count
 
 # streamlit画面作成
 st.title("原稿の注意ワードチェック")
-st.write("ファイルを登録して、メールアドレスを入力してください")
+st.write("テキスト入力 または ファイル登録して、メールアドレスを入力してください")
+
+# テキスト入力エリア
+text = st.text_area("テキストを入力して、Ctrl+Enter")
 
 # ファイルアップロード
 file = st.file_uploader("ファイル（Word[.doc, .docx] or テキスト[.txt]）をアップロード", accept_multiple_files= False)
@@ -189,5 +203,14 @@ my_address = st.text_input("メールアドレス")
 
 if file and my_address:
     st.write('処理を開始します')
-    main(my_address, file_name, gmail_address, gmail_pass)
+    df = main_file(my_address, file_name, gmail_address, gmail_pass)
+    st.dataframe(df)
     st.write('処理を終了しました')
+elif text and my_address:
+    st.write('処理を開始します')
+    df = main_text(my_address, text, gmail_address, gmail_pass)
+    st.dataframe(df)
+    st.write('処理を終了しました')
+    
+  
+    

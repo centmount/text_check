@@ -206,16 +206,21 @@ if file:
 # メールアドレス入力
 my_address = st.text_input("メールアドレス")
 
-if file and my_address:
-    st.write('処理を開始します')
-    df = main_file(my_address, file_name, gmail_address, gmail_pass)
-    st.dataframe(df)
-    st.write('処理を終了しました')
-elif text and my_address:
-    st.write('処理を開始します')
-    df = main_text(my_address, text, gmail_address, gmail_pass)
-    st.dataframe(df)
-    st.write('処理を終了しました')
-    
-  
-    
+# 実行ボタン作成
+if st.button('処理を実行'):
+    try:
+        if file and my_address:
+            st.write('処理を開始します')
+            df = main_file(my_address, file_name, gmail_address, gmail_pass)
+            st.dataframe(df)
+            st.write('処理を終了しました')
+        elif text and my_address:
+            st.write('処理を開始します')
+            df = main_text(my_address, text, gmail_address, gmail_pass)
+            st.dataframe(df)
+            st.write('処理を終了しました')
+        else:
+            st.write('入力内容を確認してください')
+    except Exception as e:
+        st.write('エラーが発生しました')
+        st.write(e)

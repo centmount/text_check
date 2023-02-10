@@ -59,9 +59,9 @@ def named_entity_recognition(text):
 
 # 固有名詞をデータフレーム化
 def make_df(entities):
-    df = pd.DataFrame(entities, columns=['text', 'label', 'start_char', 'end_char'])
-    # 人名と組織名のみ抽出
-    df_name = df[(df['label']=='PERSON') | (df['label']=='ORG')]
+    df_name = pd.DataFrame(entities, columns=['text', 'label', 'start_char', 'end_char'])
+    # 人名と組織名のみ抽出する場合
+    # df_name = df[(df['label']=='PERSON') | (df['label']=='ORG')]  
     return df_name
 
 # ヤフーニュースの検索バーのurlに変数keywordを追加する
@@ -195,7 +195,7 @@ st.write("テキスト入力 または ファイル登録して、メールア�
 text = st.text_area("テキストを入力")
 
 # ファイルアップロード
-file = st.file_uploader("ファイル（Word[.doc, .docx] or テキスト[.txt]）をアップロード", accept_multiple_files= False)
+file = st.file_uploader("ファイル（ワード[.docxのみ] or テキスト[.txt]）をアップロード", accept_multiple_files= False)
 if file:
     st.markdown(f'{file.name} をアップロードしました')
     file_name = file.name

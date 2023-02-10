@@ -61,9 +61,11 @@ def named_entity_recognition(text):
 def make_df(entities):
     df = pd.DataFrame(entities, columns=['text', 'label', 'start_char', 'end_char'])
     # 抽出する固有表現を指定
-    df_name = df[(df['label']=='PERSON')|(df['label']=='NORP')|(df['label']=='FAC')|(df['label']=='ORG')|
+    df_ext = df[(df['label']=='PERSON')|(df['label']=='NORP')|(df['label']=='FAC')|(df['label']=='ORG')|
                  (df['label']=='GPE')|(df['label']=='LOC')|(df['label']=='PRODUCT')|(df['label']=='EVENT')|
-                (df['label']=='WORK_OF_ART')|(df['label']=='LAW')|(df['label']=='LANGUAGE')]  
+                (df['label']=='WORK_OF_ART')|(df['label']=='LAW')|(df['label']=='LANGUAGE')]
+    # 重複する固有表現(text)を削除
+    df_name = df_ext.drop_duplicates(subset=['text'])
     return df_name
 
 # ヤフーニュースの検索バーのurlに変数keywordを追加する

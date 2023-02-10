@@ -26,7 +26,7 @@ nlp = spacy.load('ja_core_news_lg')
 
 # テキストを処理
 def read_text(file_name):
-    if file_name[-4:] == 'docx' or file_name[-3:] == 'doc':
+    if file_name[-4:] == 'docx':
         doc = docx.Document(file_name)
         text_list = []
         for e in doc.element.body.iterchildren():
